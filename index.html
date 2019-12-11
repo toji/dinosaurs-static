@@ -71,6 +71,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
       import { XRButtonManager } from './js/xr-button.js';
       import { InputRay } from './js/input-ray.js';
+      import { QueryArgs } from './js/query-args.js';
       import Dinosaurs from './js/dinosaurs.js';
 
       // VR Button Layout
@@ -113,6 +114,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       let ambientSounds = null;
       let hornSound = null;
       let hornButton = null;
+
+      let debugEnabled = QueryArgs.getBool('debug', true);
 
       let actions = {};
 
@@ -213,8 +216,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         window.addEventListener('resize', onWindowResize, false);
 
         // stats
-        stats = new Stats();
-        container.appendChild(stats.dom);
+        if (debugEnabled) {
+          stats = new Stats();
+          container.appendChild(stats.dom);
+        }
 
         document.body.appendChild(VRButton.createButton(renderer));
 
@@ -614,7 +619,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         renderer.render(scene, camera);
 
-        stats.update();
+        if (stats) { stats.update(); }
       }
     </script>
   </body>
